@@ -31,4 +31,6 @@ public class FavoriteProduct {
     protected void onCreate() {
         dateAdded = LocalDateTime.now();
     }
+
+
 }
