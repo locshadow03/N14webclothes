@@ -45,6 +45,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private List<Role> roles;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Customer customer;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
@@ -53,6 +56,8 @@ public class User implements UserDetails {
         }
         return authorities;
     }
+
+
     @Override
     public String getUsername() {
         return username;
