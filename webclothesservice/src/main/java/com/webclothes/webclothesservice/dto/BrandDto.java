@@ -1,5 +1,8 @@
 package com.webclothes.webclothesservice.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Base64;
 
 @Data

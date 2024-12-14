@@ -1,5 +1,8 @@
 package com.webclothes.webclothesservice.service.brand;
 
+import com.webclothes.webclothesservice.model.Brand;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;

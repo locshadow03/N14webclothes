@@ -1,5 +1,12 @@
 package com.webclothes.webclothesservice.controller;
 
+import com.webclothes.webclothesservice.dto.*;
+import com.webclothes.webclothesservice.model.Customer;
+import com.webclothes.webclothesservice.model.Order;
+import com.webclothes.webclothesservice.model.OrderItem;
+import com.webclothes.webclothesservice.repository.CustomerRepository;
+import com.webclothes.webclothesservice.service.order.IOrderService;
+import com.webclothes.webclothesservice.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -150,5 +157,204 @@ public class OrderController {
     }
 
 
+
+    @GetMapping("/count_order")
+    public ResponseEntity<CountOrderDto> getcountOrder(){
+        CountOrderDto countOrderDto = new CountOrderDto();
+
+        countOrderDto.setCountDate(orderService.getOrdersCountToday());
+        countOrderDto.setCountMonth(orderService.getOrdersCountThisMonth());
+        countOrderDto.setCountYear(orderService.getOrdersCountThisYear());
+        countOrderDto.setCountTotal(orderService.getTotalOrdersCount());
+
+        return ResponseEntity.ok(countOrderDto);
+    }
+
+    @GetMapping("/total_amount")
+    public ResponseEntity<TotalAmountDto> getTotalAmount(){
+        TotalAmountDto totalAmountDto = new TotalAmountDto();
+
+        totalAmountDto.setTotalAmountToday(orderService.getTotalAmountToday());
+        totalAmountDto.setTotalAmountThisMonth(orderService.getTotalAmountMonth());
+        totalAmountDto.setTotalAmountThisYear(orderService.getTotalAmountYear());
+        totalAmountDto.setTotalAmountAllTime(orderService.getTotalAmount());
+        return ResponseEntity.ok(totalAmountDto);
+    }
+
+    @GetMapping("/top-customers/today")
+    public ResponseEntity<List<TopCustomerDto>> getTopCustomersByTotalAmountByToday() {
+        List<CustomerTotalAmountDto> customerTotalAmountDtos = orderService.getTopCustomersByTotalAmountByToday();
+        List<TopCustomerDto> topCustomerDtos = new ArrayList<>();
+        for(CustomerTotalAmountDto customerTotalAmountDto : customerTotalAmountDtos){
+            TopCustomerDto topCustomerDto = new TopCustomerDto();
+            topCustomerDto.setId(customerTotalAmountDto.getCustomer().getId());
+            topCustomerDto.setLastName(customerTotalAmountDto.getCustomer().getLastName());
+            topCustomerDto.setFirstName(customerTotalAmountDto.getCustomer().getFirstName());
+            topCustomerDto.setPhoneNumber(customerTotalAmountDto.getCustomer().getPhoneNumber());
+            topCustomerDto.setAddress(customerTotalAmountDto.getCustomer().getAddress());
+            topCustomerDto.setTotalAmount(customerTotalAmountDto.getTotalAmount());
+            topCustomerDtos.add(topCustomerDto);
+        }
+        return ResponseEntity.ok(topCustomerDtos);
+    }
+
+    @GetMapping("/top-customers/month")
+    public ResponseEntity<List<TopCustomerDto>> getTopCustomersByTotalAmountByCurrentMonth() {
+        List<CustomerTotalAmountDto> customerTotalAmountDtos = orderService.getTopCustomersByTotalAmountByCurrentMonth();
+        List<TopCustomerDto> topCustomerDtos = new ArrayList<>();
+        for(CustomerTotalAmountDto customerTotalAmountDto : customerTotalAmountDtos){
+            TopCustomerDto topCustomerDto = new TopCustomerDto();
+            topCustomerDto.setId(customerTotalAmountDto.getCustomer().getId());
+            topCustomerDto.setLastName(customerTotalAmountDto.getCustomer().getLastName());
+            topCustomerDto.setFirstName(customerTotalAmountDto.getCustomer().getFirstName());
+            topCustomerDto.setPhoneNumber(customerTotalAmountDto.getCustomer().getPhoneNumber());
+            topCustomerDto.setAddress(customerTotalAmountDto.getCustomer().getAddress());
+            topCustomerDto.setTotalAmount(customerTotalAmountDto.getTotalAmount());
+            topCustomerDtos.add(topCustomerDto);
+        }
+        return ResponseEntity.ok(topCustomerDtos);
+    }
+
+    @GetMapping("/top-customers/year")
+    public ResponseEntity<List<TopCustomerDto>> getTopCustomersByTotalAmountByCurrentYear() {
+        List<CustomerTotalAmountDto> customerTotalAmountDtos = orderService.getTopCustomersByTotalAmountByCurrentYear();
+        List<TopCustomerDto> topCustomerDtos = new ArrayList<>();
+        for(CustomerTotalAmountDto customerTotalAmountDto : customerTotalAmountDtos){
+            TopCustomerDto topCustomerDto = new TopCustomerDto();
+            topCustomerDto.setId(customerTotalAmountDto.getCustomer().getId());
+            topCustomerDto.setLastName(customerTotalAmountDto.getCustomer().getLastName());
+            topCustomerDto.setFirstName(customerTotalAmountDto.getCustomer().getFirstName());
+            topCustomerDto.setPhoneNumber(customerTotalAmountDto.getCustomer().getPhoneNumber());
+            topCustomerDto.setAddress(customerTotalAmountDto.getCustomer().getAddress());
+            topCustomerDto.setTotalAmount(customerTotalAmountDto.getTotalAmount());
+
+            topCustomerDtos.add(topCustomerDto);
+        }
+        return ResponseEntity.ok(topCustomerDtos);
+    }
+
+    @GetMapping("/top-customers")
+    public ResponseEntity<List<TopCustomerDto>> getTopCustomersByTotalAmountOverall() {
+        List<CustomerTotalAmountDto> customerTotalAmountDtos = orderService.getTopCustomersByTotalAmountOverall();
+        List<TopCustomerDto> topCustomerDtos = new ArrayList<>();
+        for(CustomerTotalAmountDto customerTotalAmountDto : customerTotalAmountDtos){
+            TopCustomerDto topCustomerDto = new TopCustomerDto();
+            topCustomerDto.setId(customerTotalAmountDto.getCustomer().getId());
+            topCustomerDto.setLastName(customerTotalAmountDto.getCustomer().getLastName());
+            topCustomerDto.setFirstName(customerTotalAmountDto.getCustomer().getFirstName());
+            topCustomerDto.setPhoneNumber(customerTotalAmountDto.getCustomer().getPhoneNumber());
+            topCustomerDto.setAddress(customerTotalAmountDto.getCustomer().getAddress());
+            topCustomerDto.setTotalAmount(customerTotalAmountDto.getTotalAmount());
+
+            topCustomerDtos.add(topCustomerDto);
+        }
+        return ResponseEntity.ok(topCustomerDtos);
+    }
+
+    @GetMapping("/top-products/today")
+    public ResponseEntity<List<TopProductOrderDto>> getTopProductOrderByToday() throws SQLException {
+        List<ProductResponse> productResponses = orderService.getTopProductByToday();
+        List<TopProductOrderDto> topProductOrderDtos = new ArrayList<>();
+
+        for(ProductResponse productResponse : productResponses){
+            TopProductOrderDto topProductOrderDto = new TopProductOrderDto();
+
+            topProductOrderDto.setId(productResponse.getProduct().getId());
+            topProductOrderDto.setNameProduct(productResponse.getProduct().getName());
+            topProductOrderDto.setPrice(productResponse.getProduct().getPrice());
+            topProductOrderDto.setDiscount(productResponse.getProduct().getDisCount());
+            byte[] photoBytes = productService.getProductPhotoById(productResponse.getProduct().getId());
+            if (photoBytes != null && photoBytes.length > 0) {
+                String base64Photo = Base64.getEncoder().encodeToString(photoBytes);
+                topProductOrderDto.setImg(base64Photo);
+            }
+            topProductOrderDto.setTotalProductOrder(productResponse.getTotalProduct());
+
+            topProductOrderDtos.add(topProductOrderDto);
+
+        }
+        return ResponseEntity.ok(topProductOrderDtos);
+    }
+
+    @GetMapping("/top-products/month")
+    public ResponseEntity<List<TopProductOrderDto>> getTopProductOrderByMonth() throws SQLException {
+        List<ProductResponse> productResponses = orderService.getTopProductByMonth();
+        List<TopProductOrderDto> topProductOrderDtos = new ArrayList<>();
+
+        for(ProductResponse productResponse : productResponses){
+            TopProductOrderDto topProductOrderDto = new TopProductOrderDto();
+
+            topProductOrderDto.setId(productResponse.getProduct().getId());
+            topProductOrderDto.setNameProduct(productResponse.getProduct().getName());
+            topProductOrderDto.setPrice(productResponse.getProduct().getPrice());
+            topProductOrderDto.setDiscount(productResponse.getProduct().getDisCount());
+            byte[] photoBytes = productService.getProductPhotoById(productResponse.getProduct().getId());
+            if (photoBytes != null && photoBytes.length > 0) {
+                String base64Photo = Base64.getEncoder().encodeToString(photoBytes);
+                topProductOrderDto.setImg(base64Photo);
+            }
+            topProductOrderDto.setTotalProductOrder(productResponse.getTotalProduct());
+
+            topProductOrderDtos.add(topProductOrderDto);
+
+        }
+        return ResponseEntity.ok(topProductOrderDtos);
+    }
+
+    @GetMapping("/top-products/year")
+    public ResponseEntity<List<TopProductOrderDto>> getTopProductOrderByYear() throws SQLException {
+        List<ProductResponse> productResponses = orderService.getTopProductByYear();
+        List<TopProductOrderDto> topProductOrderDtos = new ArrayList<>();
+
+        for(ProductResponse productResponse : productResponses){
+            TopProductOrderDto topProductOrderDto = new TopProductOrderDto();
+
+            topProductOrderDto.setId(productResponse.getProduct().getId());
+            topProductOrderDto.setNameProduct(productResponse.getProduct().getName());
+            topProductOrderDto.setPrice(productResponse.getProduct().getPrice());
+            topProductOrderDto.setDiscount(productResponse.getProduct().getDisCount());
+            byte[] photoBytes = productService.getProductPhotoById(productResponse.getProduct().getId());
+            if (photoBytes != null && photoBytes.length > 0) {
+                String base64Photo = Base64.getEncoder().encodeToString(photoBytes);
+                topProductOrderDto.setImg(base64Photo);
+            }
+            topProductOrderDto.setTotalProductOrder(productResponse.getTotalProduct());
+
+            topProductOrderDtos.add(topProductOrderDto);
+
+        }
+        return ResponseEntity.ok(topProductOrderDtos);
+    }
+
+    @GetMapping("/top-products")
+    public ResponseEntity<List<TopProductOrderDto>> getTopProductOrderByAll() throws SQLException {
+        List<ProductResponse> productResponses = orderService.getTopProductByAll();
+        List<TopProductOrderDto> topProductOrderDtos = new ArrayList<>();
+
+        for(ProductResponse productResponse : productResponses){
+            TopProductOrderDto topProductOrderDto = new TopProductOrderDto();
+
+            topProductOrderDto.setId(productResponse.getProduct().getId());
+            topProductOrderDto.setNameProduct(productResponse.getProduct().getName());
+            topProductOrderDto.setPrice(productResponse.getProduct().getPrice());
+            topProductOrderDto.setDiscount(productResponse.getProduct().getDisCount());
+            byte[] photoBytes = productService.getProductPhotoById(productResponse.getProduct().getId());
+            if (photoBytes != null && photoBytes.length > 0) {
+                String base64Photo = Base64.getEncoder().encodeToString(photoBytes);
+                topProductOrderDto.setImg(base64Photo);
+            }
+            topProductOrderDto.setTotalProductOrder(productResponse.getTotalProduct());
+
+            topProductOrderDtos.add(topProductOrderDto);
+
+        }
+        return ResponseEntity.ok(topProductOrderDtos);
+    }
+
+    @GetMapping("/chart")
+    public ResponseEntity<List<Double>> getMonthlyRevenue(@RequestParam int year) {
+        List<Double> revenue = orderService.getMonthlyRevenue(year);
+        return ResponseEntity.ok(revenue);
+    }
 
 }

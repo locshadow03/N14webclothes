@@ -1,5 +1,17 @@
 package com.webclothes.webclothesservice.controller;
 
+import com.webclothes.webclothesservice.dto.BrandDto;
+import com.webclothes.webclothesservice.exception.PhotoRetrievalExcetion;
+import com.webclothes.webclothesservice.exception.ResourceNotFoundException;
+import com.webclothes.webclothesservice.model.Brand;
+import com.webclothes.webclothesservice.service.brand.IBrandService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;

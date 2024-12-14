@@ -1,6 +1,14 @@
 package com.webclothes.webclothesservice.service.contact;
 
 
+import com.webclothes.webclothesservice.model.Contact;
+import com.webclothes.webclothesservice.repository.ContactRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ContactImpl implements IContactService{

@@ -1,8 +1,11 @@
 package com.webclothes.webclothesservice.service.cart;
 
 
+import com.webclothes.webclothesservice.exception.ResourceNotFoundException;
 import com.webclothes.webclothesservice.model.Cart;
+import com.webclothes.webclothesservice.model.CartItem;
 import com.webclothes.webclothesservice.model.Customer;
+import com.webclothes.webclothesservice.model.Product;
 import com.webclothes.webclothesservice.repository.CartItemRepository;
 import com.webclothes.webclothesservice.repository.CartRepository;
 import com.webclothes.webclothesservice.repository.CustomerRepository;
@@ -10,6 +13,9 @@ import com.webclothes.webclothesservice.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

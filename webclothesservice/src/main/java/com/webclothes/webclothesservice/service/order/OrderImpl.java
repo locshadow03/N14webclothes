@@ -1,5 +1,9 @@
 package com.webclothes.webclothesservice.service.order;
 
+import com.webclothes.webclothesservice.dto.CustomerTotalAmountDto;
+import com.webclothes.webclothesservice.dto.ProductResponse;
+import com.webclothes.webclothesservice.model.*;
+import com.webclothes.webclothesservice.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -144,6 +148,120 @@ public class OrderImpl implements IOrderService{
         }
         // Xóa order
         orderRepository.deleteById(orderId);
+    }
+
+
+    public long getOrdersCountToday() {
+        return orderRepository.countOrdersToday();
+    }
+
+    public long getOrdersCountThisMonth() {
+        return orderRepository.countOrdersThisMonth();
+    }
+
+    public long getOrdersCountThisYear() {
+        return orderRepository.countOrdersThisYear();
+    }
+
+    public long getTotalOrdersCount() {
+        return orderRepository.countTotalOrders();
+    }
+
+    @Override
+    public Double getTotalAmountToday() {
+        return orderItemRepository.getTotalAmountToday();
+    }
+
+    @Override
+    public Double getTotalAmountMonth() {
+        return orderItemRepository.getTotalAmountThisMonth();
+    }
+
+    @Override
+    public Double getTotalAmountYear() {
+        return orderItemRepository.getTotalAmountThisYear();
+    }
+
+    @Override
+    public Double getTotalAmount() {
+        return orderItemRepository.getTotalAmountAllTime();
+    }
+
+
+    // Tổng giá trị đơn hàng của khách hàng theo ngày hiện tại
+    public List<CustomerTotalAmountDto> getTopCustomersByTotalAmountByToday() {
+        List<Object[]> results = orderRepository.findTopCustomersByTotalAmountByToday();
+        return results.stream()
+                .map(result -> new CustomerTotalAmountDto((Customer) result[0], (Double) result[1]))
+                .collect(Collectors.toList());
+    }
+
+    // Tổng giá trị đơn hàng của khách hàng theo tháng hiện tại
+    public List<CustomerTotalAmountDto> getTopCustomersByTotalAmountByCurrentMonth() {
+        List<Object[]> results = orderRepository.findTopCustomersByTotalAmountByCurrentMonth();
+        return results.stream()
+                .map(result -> new CustomerTotalAmountDto((Customer) result[0], (Double) result[1]))
+                .collect(Collectors.toList());
+    }
+
+    // Tổng giá trị đơn hàng của khách hàng theo năm hiện tại
+    public List<CustomerTotalAmountDto> getTopCustomersByTotalAmountByCurrentYear() {
+        List<Object[]> results = orderRepository.findTopCustomersByTotalAmountByCurrentYear();
+        return results.stream()
+                .map(result -> new CustomerTotalAmountDto((Customer) result[0], (Double) result[1]))
+                .collect(Collectors.toList());
+    }
+
+    // Tổng giá trị đơn hàng của khách hàng toàn bộ
+    public List<CustomerTotalAmountDto> getTopCustomersByTotalAmountOverall() {
+        List<Object[]> results = orderRepository.findTopCustomersByTotalAmountOverall();
+        return results.stream()
+                .map(result -> new CustomerTotalAmountDto((Customer) result[0], (Double) result[1]))
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductResponse> getTopProductByToday() {
+        List<Object[]> results = orderItemRepository.findTop5ProductsByToday();
+        return results.stream()
+                .map(result -> new ProductResponse((Product) result[0], Math.toIntExact((Long) result[1])))
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductResponse> getTopProductByMonth() {
+        List<Object[]> results = orderItemRepository.findTop5ProductsByCurrentMonth();
+        return results.stream()
+                .map(result -> new ProductResponse((Product) result[0], Math.toIntExact((Long) result[1])))
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductResponse> getTopProductByYear() {
+        List<Object[]> results = orderItemRepository.findTop5ProductsByCurrentYear();
+        return results.stream()
+                .map(result -> new ProductResponse((Product) result[0], Math.toIntExact((Long) result[1])))
+                .collect(Collectors.toList());
+    }
+    public List<ProductResponse> getTopProductByAll() {
+        List<Object[]> results = orderItemRepository.findTop5ProductsOverall();
+        return results.stream()
+                .map(result -> new ProductResponse((Product) result[0], Math.toIntExact((Long) result[1])))
+                .collect(Collectors.toList());
+    }
+
+    public List<Double> getMonthlyRevenue(int year) {
+        // Khởi tạo danh sách doanh thu hàng tháng với giá trị mặc định là 0.0
+        List<Double> monthlyRevenue = new ArrayList<>(Collections.nCopies(12, 0.0));
+
+        // Lấy danh sách các đơn hàng trong năm
+        List<Order> orders = orderRepository.findAllByYear(year);
+
+        // Tính tổng doanh thu của từng tháng
+        for (Order order : orders) {
+            int month = order.getOrderDate().getMonthValue() - 1; // Tháng 1 là index 0
+            double orderTotal = order.getTotalAmount();
+            monthlyRevenue.set(month, monthlyRevenue.get(month) + orderTotal);
+        }
+
+        return monthlyRevenue;
     }
 
 

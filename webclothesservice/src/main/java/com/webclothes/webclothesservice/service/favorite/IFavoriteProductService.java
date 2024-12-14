@@ -1,7 +1,7 @@
 package com.webclothes.webclothesservice.service.favorite;
 
-import com.shopclothes.dto.FavoriteProductResponse;
-import com.shopclothes.model.FavoriteProduct;
+import com.webclothes.webclothesservice.dto.FavoriteProductResponse;
+import com.webclothes.webclothesservice.model.FavoriteProduct;
 
 import java.util.List;
 

@@ -1,11 +1,12 @@
 package com.webclothes.webclothesservice.controller;
 
-import com.shopclothes.dto.*;
-import com.shopclothes.extension.PhotoRetrievalExcetion;
-import com.shopclothes.model.FavoriteProduct;
-import com.shopclothes.model.Product;
-import com.shopclothes.service.favorite.IFavoriteProductService;
-import com.shopclothes.service.product.IProductService;
+import com.webclothes.webclothesservice.dto.FavoriteProductDto;
+import com.webclothes.webclothesservice.dto.FavoriteProductResponse;
+import com.webclothes.webclothesservice.dto.TopFavoriteProductDto;
+import com.webclothes.webclothesservice.exception.PhotoRetrievalExcetion;
+import com.webclothes.webclothesservice.model.FavoriteProduct;
+import com.webclothes.webclothesservice.service.favorite.IFavoriteProductService;
+import com.webclothes.webclothesservice.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @CrossOrigin("http://localhost:3000")
 @RestController

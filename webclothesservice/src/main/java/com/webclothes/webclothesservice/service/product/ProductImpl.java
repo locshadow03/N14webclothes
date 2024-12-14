@@ -1,5 +1,21 @@
 package com.webclothes.webclothesservice.service.product;
 
+import com.webclothes.webclothesservice.dto.SizeQuantityDto;
+import com.webclothes.webclothesservice.exception.InternalServerException;
+import com.webclothes.webclothesservice.exception.ResourceNotFoundException;
+import com.webclothes.webclothesservice.model.Brand;
+import com.webclothes.webclothesservice.model.Category;
+import com.webclothes.webclothesservice.model.Product;
+import com.webclothes.webclothesservice.model.SizeQuantity;
+import com.webclothes.webclothesservice.repository.BrandRepository;
+import com.webclothes.webclothesservice.repository.CategoryRepository;
+import com.webclothes.webclothesservice.repository.ProductRepository;
+import com.webclothes.webclothesservice.repository.SizeQuantityRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;

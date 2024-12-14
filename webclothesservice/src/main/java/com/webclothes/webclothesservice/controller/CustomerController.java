@@ -49,14 +49,20 @@ public class CustomerController {
     }
 
     @PutMapping("/update/{id}")
-    public Customer updateCustomer(@PathVariable Long id,
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable Long id,
                                    @RequestParam("firstName") String firstName,
                                    @RequestParam("lastName") String lastName,
                                    @RequestParam("phoneNumber") String phoneNumber,
                                    @RequestParam("address") String address,
                                    @RequestParam("avatar") MultipartFile avatar) throws IOException, SQLException {
         byte[] photoBytes = avatar != null && !avatar.isEmpty() ? avatar.getBytes() : customerService.getAvatarById(id);
-        return customerService.updateCustomer(id,firstName, lastName, phoneNumber, address, photoBytes);
+        Customer customer = customerService.updateCustomer(id,firstName, lastName, phoneNumber, address, photoBytes);
+
+        CustomerDto customerDto = getCustomerDtoDetail(customer);
+
+        customerDto.setStatus("Cập nhật thành công!");
+
+        return ResponseEntity.ok(customerDto);
     }
 
 

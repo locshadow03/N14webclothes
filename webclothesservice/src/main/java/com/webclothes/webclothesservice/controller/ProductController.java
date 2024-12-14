@@ -1,5 +1,21 @@
 package com.webclothes.webclothesservice.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.webclothes.webclothesservice.dto.ProductDto;
+import com.webclothes.webclothesservice.dto.SizeQuantityDto;
+import com.webclothes.webclothesservice.exception.PhotoRetrievalExcetion;
+import com.webclothes.webclothesservice.exception.ResourceNotFoundException;
+import com.webclothes.webclothesservice.model.Product;
+import com.webclothes.webclothesservice.repository.ProductRepository;
+import com.webclothes.webclothesservice.service.product.IProductService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.sql.Blob;

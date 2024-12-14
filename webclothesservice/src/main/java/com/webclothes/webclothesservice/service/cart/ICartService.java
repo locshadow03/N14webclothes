@@ -8,7 +8,7 @@ public interface ICartService {
 
     Cart createCart(Long customerId);
 
-    Optional<Cart> getcardById(Long cartId);
+    Optional<Cart> getCartById(Long cartId);
 
     Cart getCartByCustomerId(Long customerId);
     Cart addProductToCart(Long cartId, Long productId, int quantity, String size);

@@ -1,13 +1,12 @@
-package com.shopclothes.service.favorite;
+package com.webclothes.webclothesservice.service.favorite;
 
-import com.shopclothes.dto.FavoriteProductResponse;
-import com.shopclothes.dto.ProductResponse;
-import com.shopclothes.model.FavoriteProduct;
-import com.shopclothes.model.Product;
-import com.shopclothes.model.User;
-import com.shopclothes.repository.FavoriteProductRepository;
-import com.shopclothes.repository.ProductRepository;
-import com.shopclothes.repository.UserRepository;
+import com.webclothes.webclothesservice.dto.FavoriteProductResponse;
+import com.webclothes.webclothesservice.model.FavoriteProduct;
+import com.webclothes.webclothesservice.model.Product;
+import com.webclothes.webclothesservice.model.User;
+import com.webclothes.webclothesservice.repository.FavoriteProductRepository;
+import com.webclothes.webclothesservice.repository.ProductRepository;
+import com.webclothes.webclothesservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class FavoriteProductImpl implements IFavoriteProductService{
+public class FavoriteProductImpl implements IFavoriteProductService {
     private final FavoriteProductRepository favoriteProductRepository;
 
     private final ProductRepository productRepository;

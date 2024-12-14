@@ -16,8 +16,8 @@ import java.util.List;
 public class CartDto {
 
     private Long productId;
-    private Long cardId;
-    private Long cardItemId;
+    private Long cartId;
+    private Long cartItemId;
     private Long customerId;
     private String nameProduct;
     private String imageProduct;

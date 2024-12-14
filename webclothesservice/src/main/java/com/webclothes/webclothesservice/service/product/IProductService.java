@@ -1,5 +1,9 @@
 package com.webclothes.webclothesservice.service.product;
 
+import com.webclothes.webclothesservice.dto.SizeQuantityDto;
+import com.webclothes.webclothesservice.model.Product;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;

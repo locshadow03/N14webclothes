@@ -1,8 +1,8 @@
 package com.webclothes.webclothesservice.repository;
 
-import com.shopclothes.model.FavoriteProduct;
-import com.shopclothes.model.Product;
-import com.shopclothes.model.User;
+import com.webclothes.webclothesservice.model.FavoriteProduct;
+import com.webclothes.webclothesservice.model.Product;
+import com.webclothes.webclothesservice.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

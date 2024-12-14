@@ -1,6 +1,6 @@
 package com.webclothes.webclothesservice.dto;
 
-import com.shopclothes.model.Product;
+import com.webclothes.webclothesservice.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
