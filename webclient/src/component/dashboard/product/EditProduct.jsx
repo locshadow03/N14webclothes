@@ -78,7 +78,7 @@ const EditProduct = () => {
 const handleAddSizeQuantity = () => {
     setProduct({
         ...product,
-        sizeQuantities: [...product.sizeQuantities, { size: "", quantity: "" }]
+        sizeQuantities: [...product.sizeQuantities, { size: "", quantity: "" , color: ""}]
     });
 };
 
@@ -192,6 +192,13 @@ const handleRemoveSizeQuantity = (index) => {
                                     placeholder="Size"
                                     value={sizeQuantity.size}
                                     onChange={(e) => handleSizeQuantityChange(index, 'size', e.target.value)}
+                                />
+                                <input
+                                    type="text"
+                                    className='form-control'
+                                    placeholder="Color"
+                                    value={sizeQuantity.color}
+                                    onChange={(e) => handleSizeQuantityChange(index, 'color', e.target.value)}
                                 />
                                 <input
                                     type="number"

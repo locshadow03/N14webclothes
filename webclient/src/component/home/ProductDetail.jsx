@@ -18,6 +18,17 @@ const ProductDetail = () => {
         imageProduct: ""
 
     })
+
+    const colors = [
+      { name: "Đỏ", code: "#FF0000" },
+      { name: "Xanh biển", code: "#0000FF" },
+      { name: "Xanh lá", code: "#008000" },
+      { name: "Trắng", code: "#FFFFFF" },
+      { name: "Đen", code: "#000000" },
+      { name: "Vàng", code: "#FFFF00" },
+      { name: "Hồng", code: "#FFC0CB" },
+  ];
+  
     const paragraphs = product.description.split('-');
     const [quantity, setQuantity] = useState(1)
 
@@ -169,6 +180,23 @@ const ProductDetail = () => {
             </select>
             </p>
             <p><strong>Số Lượng Còn Lại:</strong> {product.sizeQuantities.find(sizeQuantity => sizeQuantity.size === selectedProductSize)?.quantity || 0}</p>
+            <div className = "d-flex">
+            <p>Màu sắc:</p>
+            <div className = "text-center mx-3" style={{height:'100%'}}>
+                  <div style={{
+                  height: '25px',
+                  width: '25px',
+                  backgroundColor: 
+                  colors.find(color =>
+                  product.sizeQuantities.find(sizeQuantity =>
+                  sizeQuantity.size === selectedProductSize && sizeQuantity.color === color.name
+                  )
+                  )?.code || 'transparent', border: '1px solid black'
+                  }}>
+
+                </div>
+            </div>
+            </div>
             <div>
                 <span className="bi bi-star-fill" style = {{color:'orange'}}></span>
                 <span className="bi bi-star-fill" style = {{color:'orange'}}></span>

@@ -4,7 +4,9 @@ import com.webclothes.webclothesservice.dto.*;
 import com.webclothes.webclothesservice.model.Customer;
 import com.webclothes.webclothesservice.model.Order;
 import com.webclothes.webclothesservice.model.OrderItem;
+import com.webclothes.webclothesservice.model.SizeQuantity;
 import com.webclothes.webclothesservice.repository.CustomerRepository;
+import com.webclothes.webclothesservice.repository.SizeQuantityRepository;
 import com.webclothes.webclothesservice.service.order.IOrderService;
 import com.webclothes.webclothesservice.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ public class OrderController {
     private final IOrderService orderService;
     private final CustomerRepository customerRepository;
     private final IProductService productService;
+    private final SizeQuantityRepository sizeQuantityRepository;
 
 
     @PostMapping("/add-order")
@@ -118,6 +121,8 @@ public class OrderController {
             dto.setProductId(item.getProduct().getId());
             dto.setProductName(item.getProduct().getName());
             dto.setSize(item.getSize());
+            SizeQuantity sizeQuantity = sizeQuantityRepository.findByIdProductAndSize(item.getProduct().getId(), item.getSize());
+            dto.setColor(sizeQuantity.getColor());
             dto.setQuantity(item.getQuantity());
             dto.setDisCount(item.getProduct().getDisCount());
             dto.setPrice(item.getProduct().getPrice());

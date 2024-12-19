@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -12,7 +13,7 @@ root.render(
     <ToastContainer
       position="top-right"
 
-      style = {{top: "150px", height: '25px', fontSize:'14px', bacbackgroundColor:"blue"}}
+      style = {{top: "150px", height: '25px', fontSize:'14px'}}
     />
   </React.StrictMode>
 );

@@ -7,10 +7,7 @@ import com.webclothes.webclothesservice.model.Brand;
 import com.webclothes.webclothesservice.model.Category;
 import com.webclothes.webclothesservice.model.Product;
 import com.webclothes.webclothesservice.model.SizeQuantity;
-import com.webclothes.webclothesservice.repository.BrandRepository;
-import com.webclothes.webclothesservice.repository.CategoryRepository;
-import com.webclothes.webclothesservice.repository.ProductRepository;
-import com.webclothes.webclothesservice.repository.SizeQuantityRepository;
+import com.webclothes.webclothesservice.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +28,7 @@ public class ProductImpl implements IProductService{
     private final CategoryRepository categoryRepository;
     private final BrandRepository brandRepository;
     private final SizeQuantityRepository sizeQuantityRepository;
+    private final FavoriteProductRepository favoriteProductRepository;
 
     @Override
     public Product addNewProduct(String name, String code, String nameCategory, String description, double price, List<SizeQuantityDto> sizeQuantities, MultipartFile imageProduct, String nameBrand, double disCount) throws SQLException, IOException {
@@ -58,7 +56,7 @@ public class ProductImpl implements IProductService{
         }
 
         List<SizeQuantity> sizeQuantityList = sizeQuantities.stream()
-                .map(dto -> new SizeQuantity(null, dto.getSize(), dto.getQuantity(), product))
+                .map(dto -> new SizeQuantity(null, dto.getSize(), dto.getQuantity(), dto.getColor(), product))
                 .collect(Collectors.toList());
 
         product.setSizeQuantities(sizeQuantityList);
@@ -87,6 +85,7 @@ public class ProductImpl implements IProductService{
     public void deleteProduct(Long productId){
         Optional<Product> theProduct = productRepository.findById(productId);
         if(theProduct.isPresent()){
+            favoriteProductRepository.deleteByProductID(productId);
             productRepository.deleteById(productId);
         }
     }
@@ -118,7 +117,7 @@ public class ProductImpl implements IProductService{
 
         // Thêm các SizeQuantity mới
         List<SizeQuantity> newSizeQuantities = sizeQuantities.stream()
-                .map(dto -> new SizeQuantity(dto.getSize(), dto.getQuantity(), product))
+                .map(dto -> new SizeQuantity(dto.getSize(), dto.getQuantity(),product, dto.getColor()))
                 .collect(Collectors.toList());
 
         product.setSizeQuantities(newSizeQuantities);

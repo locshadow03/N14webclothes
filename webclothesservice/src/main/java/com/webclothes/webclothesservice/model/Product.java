@@ -57,6 +57,8 @@ public class Product {
     @Column(nullable = false)
     private int viewCount = 0;
 
+    private String color;
+
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<SizeQuantity> sizeQuantities;
 

@@ -10,6 +10,7 @@ public class OrderItemDto {
     private String productName;
     private String size;
     private Integer quantity;
+    private String color;
     private double price;
     private double disCount;
     private String imageProduct;

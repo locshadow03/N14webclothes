@@ -22,13 +22,17 @@ public class SizeQuantity {
     @Column(nullable = false)
     private int quantity;
 
+    private String color;
+
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    public SizeQuantity(String size, int quantity, Product product) {
+    public SizeQuantity(String size, int quantity, Product product, String color) {
         this.size = size;
         this.quantity = quantity;
         this.product = product;
+        this.color = color;
     }
+
 }

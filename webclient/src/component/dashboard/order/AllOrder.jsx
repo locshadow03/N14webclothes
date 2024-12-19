@@ -18,6 +18,15 @@ const AllOrder = () => {
         'Giao hàng thành công'
     ];
 
+    const colors = [
+        { name: "Đỏ", code: "#FF0000" },
+        { name: "Xanh biển", code: "#0000FF" },
+        { name: "Xanh lá", code: "#008000" },
+        { name: "Trắng", code: "#FFFFFF" },
+        { name: "Đen", code: "#000000" },
+        { name: "Vàng", code: "#FFFF00" },
+        { name: "Hồng", code: "#FFC0CB" },
+    ];
     const handleStatusChange = async (orderId, newStatus) => {
         try {
             await updateStatusOrder(orderId, newStatus);
@@ -214,6 +223,7 @@ const AllOrder = () => {
                                                 <th>Hình ảnh</th>
                                                 <th>Tên sản phẩm</th>
                                                 <th>Size</th>
+                                                <th>Màu sắc</th>
                                                 <th>Số lượng</th>
                                                 <th>Giá</th>
                                             </tr>
@@ -232,6 +242,18 @@ const AllOrder = () => {
                                                     </td>
                                                     <td>{item.productName}</td>
                                                     <td>{item.size}</td>
+                                                    <td className = "text-center" style={{height:'100%'}}>
+                                                        <div style={{
+                                                        height: '25px',
+                                                        width: '25px',
+                                                        backgroundColor: 
+                                                        colors.find(color =>
+                                                            item.color === color.name
+                                                        )?.code || 'transparent', border: '1px solid black'
+                                                    }}>
+
+                                                        </div>
+                                                    </td>
                                                     <td>{item.quantity}</td>
                                                     <td className="text-danger">
                                                         {formatCurrency(

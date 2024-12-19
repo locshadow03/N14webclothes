@@ -3,6 +3,8 @@ package com.webclothes.webclothesservice.controller;
 import com.webclothes.webclothesservice.dto.CartDto;
 import com.webclothes.webclothesservice.model.Cart;
 import com.webclothes.webclothesservice.model.CartItem;
+import com.webclothes.webclothesservice.model.SizeQuantity;
+import com.webclothes.webclothesservice.repository.SizeQuantityRepository;
 import com.webclothes.webclothesservice.service.cart.ICartService;
 import com.webclothes.webclothesservice.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.Optional;
 public class CartController {
     private final ICartService cartService;
     private final IProductService productService;
+    private final SizeQuantityRepository sizeQuantityRepository;
 
     @PostMapping("/create")
     public ResponseEntity<CartDto> createCart(@RequestParam Long userId) {
@@ -52,6 +55,8 @@ public class CartController {
                 cartDto.setNameProduct(cartItem.getProduct().getName());
                 cartDto.setPrice(cartItem.getPrice());
                 cartDto.setSize(cartItem.getSize());
+                SizeQuantity sizeQuantity = sizeQuantityRepository.findByIdProductAndSize(cartItem.getProduct().getId(), cartItem.getSize());
+                cartDto.setColor(sizeQuantity.getColor());
                 cartDto.setQuantity(cartItem.getQuantity());
                 cartDto.setImageProduct(base64Photo);
                 cartDto.setDisCount(cartItem.getProduct().getDisCount());

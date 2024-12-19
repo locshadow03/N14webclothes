@@ -4,13 +4,21 @@ import com.webclothes.webclothesservice.model.FavoriteProduct;
 import com.webclothes.webclothesservice.model.Product;
 import com.webclothes.webclothesservice.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface FavoriteProductRepository extends JpaRepository<FavoriteProduct, Long> {
     List<FavoriteProduct> findByUser(User user);
+
+    @Modifying
+    @Transactional
+    @Query("delete from FavoriteProduct fav where fav.product.id = :product_id")
+    void deleteByProductID(@Param("product_id") Long product_id);
     Optional<FavoriteProduct> findByUserAndProduct(User user, Product product);
 
     @Query("SELECT fp.product, COUNT(fp.id) FROM FavoriteProduct fp WHERE FUNCTION('DATE', fp.dateAdded) = FUNCTION('DATE', CURRENT_DATE) GROUP BY fp.product ORDER BY COUNT(fp.id) DESC")

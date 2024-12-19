@@ -45,7 +45,7 @@ const AddProduct = () => {
     const handleAddSizeQuantity = () => {
         setNewProduct({
             ...newProduct,
-            sizeQuantities: [...newProduct.sizeQuantities, { size: "", quantity: "" }]
+            sizeQuantities: [...newProduct.sizeQuantities, { size: "", quantity: "" , color: ""}]
         });
     };
 
@@ -205,6 +205,13 @@ const AddProduct = () => {
                                     placeholder="Size"
                                     value={sizeQuantity.size}
                                     onChange={(e) => handleSizeQuantityChange(index, 'size', e.target.value)}
+                                />
+                                <input
+                                    type="text"
+                                    className='form-control mx-1'
+                                    placeholder="Color"
+                                    value={sizeQuantity.color}
+                                    onChange={(e) => handleSizeQuantityChange(index, 'color', e.target.value)}
                                 />
                                 <input
                                     type="number"

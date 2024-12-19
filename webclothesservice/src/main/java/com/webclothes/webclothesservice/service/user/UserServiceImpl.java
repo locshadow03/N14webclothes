@@ -56,7 +56,7 @@ public class UserServiceImpl implements IUserService{
             user.setEmail(registrationRequest.getEmail());
             user.setUsername(registrationRequest.getUsername());
             user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-            user.setRoles(Arrays.asList(roleRepository.findByName("ADMIN")));
+            user.setRoles(Arrays.asList(roleRepository.findByName("USER")));
             User userResult = userRepository.save(user);
             Customer customer = customerService.updateCustomer(userResult.getId(), null, null, null, null, null);
             if(userResult.getId() > 0){

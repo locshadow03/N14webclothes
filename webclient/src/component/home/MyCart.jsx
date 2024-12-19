@@ -13,6 +13,16 @@ const MyCart = () => {
     
     const[totalMoney, setTotalMoney] = useState(0)
 
+    const colors = [
+        { name: "Đỏ", code: "#FF0000" },
+        { name: "Xanh biển", code: "#0000FF" },
+        { name: "Xanh lá", code: "#008000" },
+        { name: "Trắng", code: "#FFFFFF" },
+        { name: "Đen", code: "#000000" },
+        { name: "Vàng", code: "#FFFF00" },
+        { name: "Hồng", code: "#FFC0CB" },
+    ];
+
     const [customer, setCustomer] = useState({
         customerId : "",
         firstName :"",
@@ -188,6 +198,7 @@ const MyCart = () => {
                             <th style = {{color:'#808080', fontWeight: "none"}}>Sản phẩm</th>
                             <th style = {{color:'#808080', fontWeight: "none"}}></th>
                             <th style = {{color:'#808080', fontWeight: "none"}}>Kích thước</th>
+                            <th style = {{color:'#808080', fontWeight: "none"}}>Màu sắc</th>
                             <th style = {{color:'#808080', fontWeight: "none"}}>Giá sản phẩm</th>
                             <th style = {{color:'#808080', fontWeight: "none"}}>Phiếu giảm giá</th>
                             <th style = {{color:'#808080', fontWeight: "none"}}>Số lượng</th>
@@ -210,7 +221,21 @@ const MyCart = () => {
                                 </td>
                                 <td>{cartItem.nameProduct}</td>
                                 <td>{cartItem.size}</td>
+                                <td style={{height:'100%'}}>
+                                        <div className = "d-flex justify-content-center align-items-center">
+                                        <div style={{
+                                        height: '25px',
+                                        width: '25px',
+                                        backgroundColor: 
+                                        colors.find(color =>
+                                            cartItem.color === color.name
+                                        )?.code || 'transparent', border: '1px solid black'
+                                        }}>
+                                        </div>
+                                        </div>
+                                </td> 
                                 <td className='text-danger'>{formatCurrency(cartItem.price)}</td>
+                                      
                                 <td>
                                 <span style={{ fontSize: '12px', color: 'white', backgroundColor: cartItem.disCount !== 0 ? 'red' : 'green', padding: '2px 5px', borderRadius: '3px', fontWeight: 'bold' }}>
                                             {cartItem.disCount !== 0 ?  `Giảm ${cartItem.disCount}%`  : 'Không có giảm giá'}

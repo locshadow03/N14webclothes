@@ -25,6 +25,7 @@ public class CartDto {
     private Double price;
     private Double disCount;
     private String size;
+    private String color;
     private String status;
     private List<CartItem> cartItems;
 

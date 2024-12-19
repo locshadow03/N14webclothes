@@ -39,6 +39,16 @@ const AllProducts = () => {
         }
     }
 
+    const colors = [
+        { name: "Đỏ", code: "#FF0000" },
+        { name: "Xanh biển", code: "#0000FF" },
+        { name: "Xanh lá", code: "#008000" },
+        { name: "Trắng", code: "#FFFFFF" },
+        { name: "Đen", code: "#000000" },
+        { name: "Vàng", code: "#FFFF00" },
+        { name: "Hồng", code: "#FFC0CB" },
+    ];
+
     const handleDelete = async(productId) =>{
         try{
             const result = await deleteProduct(productId)
@@ -110,6 +120,7 @@ const AllProducts = () => {
                         <th>Phiếu giảm giá</th>
                         <th>Tình trạng giảm giá</th>
                         <th>Size</th>
+                        <th>Màu</th>
                         <th>Số lượng</th>
                         <th>Lượt xem</th>
                         <th>Actions</th>
@@ -155,6 +166,21 @@ const AllProducts = () => {
                                                 </option>
                                             ))}
                                         </select>
+                                    </td>
+
+                                    <td className = "text-center" style={{height:'100%'}}>
+                                        <div style={{
+                                        height: '25px',
+                                        width: '25px',
+                                        backgroundColor: 
+                                        colors.find(color =>
+                                            product.sizeQuantities.find(sizeQuantity =>
+                                            sizeQuantity.size === selectedProductSize && sizeQuantity.color === color.name
+                                            )
+                                        )?.code || 'transparent', border: '1px solid black'
+                                    }}>
+
+                                        </div>
                                     </td>
 
                                     <td>
@@ -257,6 +283,7 @@ const AllProducts = () => {
                                                 <thead>
                                                     <tr>
                                                         <th>Size</th>
+                                                        <th>Màu sắc</th>
                                                         <th>Số lượng</th>
                                                     </tr>
                                                 </thead>
@@ -264,6 +291,16 @@ const AllProducts = () => {
                                                     {productDetail.sizeQuantities.map((sizeQuantity, index) => (
                                                         <tr key={index}>
                                                             <td>{sizeQuantity.size}</td>
+                                                            <td className = "text-center" style={{height:'100%'}}>
+                                                                <div style={{
+                                                                height: '25px',
+                                                                width: '25px',
+                                                                backgroundColor: 
+                                                                colors.find(color =>
+                                                                    sizeQuantity.color === color.name
+                                                                )?.code || 'transparent', border: '1px solid black'
+                                                                }}></div>
+                                                            </td>
                                                             <td>{sizeQuantity.quantity}</td>
                                                         </tr>
                                                     ))}

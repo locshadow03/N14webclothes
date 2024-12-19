@@ -125,7 +125,7 @@ public class ProductController {
             }
         }
         List<SizeQuantityDto> sizeQuantities = product.getSizeQuantities().stream()
-                .map(sq -> new SizeQuantityDto(sq.getId(), sq.getSize(), sq.getQuantity()))
+                .map(sq -> new SizeQuantityDto(sq.getId(), sq.getSize(), sq.getQuantity(), sq.getColor()))
                 .collect(Collectors.toList());
         ProductDto productDto = new ProductDto(product.getId(), product.getName(), product.getPrice(), photoBytes, product.getDisCount(), product.getViewCount());
         productDto.setSizeQuantities(sizeQuantities);
@@ -145,7 +145,7 @@ public class ProductController {
             }
         }
         List<SizeQuantityDto> sizeQuantities = product.getSizeQuantities().stream()
-                .map(sq -> new SizeQuantityDto(sq.getId(), sq.getSize(), sq.getQuantity()))
+                .map(sq -> new SizeQuantityDto(sq.getId(), sq.getSize(), sq.getQuantity(), sq.getColor()))
                 .collect(Collectors.toList());
 
         ProductDto productDto = new ProductDto(product.getId(), product.getName(), product.getCode(), product.getCategory().getNameCategory(), product.getDescription(), product.getPrice(), photoBytes, product.getBrand().getName(), sizeQuantities, product.getCreatedAt(), product.getUpdatedAt(), product.getDisCount(), product.getViewCount());
